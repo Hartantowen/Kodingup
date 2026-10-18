@@ -1,15 +1,22 @@
 const readline = require ('readline-sync');
-const AmountInvested = +readline.question('The amount invested: ');
-const APR = +readline.question('Annual interest rate: ');
-const Years = +readline.question('Years to project: ');
+const InvestedAmount = +readline.question('The amount invested: ');
+const AnnualInterestRate = +readline.question('Annual interest rate: ') / 100;
+const YearsToProject = +readline.question('Years to project: ');
 
-let currentvalue = AmountInvested
-const monthlyrate = (APR / 100) / 12
-console.log();
-for (let i = 1; i <= Years; i++) {
-for (let month = 1; month <=12; month++){
-  currentvalue += currentvalue * (monthlyrate);
- } 
-  let formattedvalue = Math.round(currentvalue * 100) / 100;
-  console.log(`Year ${i}, value: ${formattedvalue}`);
+const Months_In_Year = 12;
+
+function calculateCompoundAmount(InvestedAmount, AnnualInterestRate, year){
+const monthlyInterestRate = AnnualInterestRate / Months_In_Year;
+return InvestedAmount * (1+ monthlyInterestRate)**(year * Months_In_Year);
 }
+
+function formatCurrency(amount) {
+  return Math.floor(amount * 100) / 100;
+}
+for (let year = 1; year <= YearsToProject; year++) {
+  const compoundAmount = calculateCompoundAmount(InvestedAmount, AnnualInterestRate, year);
+  console.log(`Year ${year}, value: ${formatCurrency(compoundAmount)}`);
+}
+
+
+

@@ -1,22 +1,40 @@
 const readline = require('readline-sync');
 
-const input = readline.question('Enter the integers between 1 and 100: ');
-const rawValues = input.trim().split(/\s+/).filter(Boolean);
-const counts = {};
+function parseIntegers(str) {
+  const strs = str.split(' ');
+  const integers = [];
 
-for (const rawValue of rawValues){
-  const num = parseInt(rawValue,10);
-  if(!isNaN(num) && num >= 1 && num <= 100) {
-counts[num] = (counts[num] || 0) + 1;
+  for (let i = 0; i < strs.length; i++) {
+    const integer = +strs[i];
+    integers.push(integer);
   }
+  return integers
 }
- 
-const sortedNumbers = Object.keys(counts)
-.map(Number)
-.sort((a,b)=> a - b);
 
-for (const num of sortedNumbers){
-  const occurance = counts[num];
-  const label = occurance === 1 ? 'time' : 'times';
-  console.log(`${num} occurs ${occurance} ${label}`);
+function buildOccurrences(values) {
+  const occurences = {};
+
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i];
+
+    if (value in occurences) {
+      occurences[value]++;
+    } else {
+      occurences[value] = 1;
+    }
+  }
+  return occurences
+}
+
+const integers = parseIntegers(readline.question('Enter the integers between 1 and 100: '));
+const occurrences = buildOccurrences(integers);
+
+for (const integer in occurrences) {
+  const occurrence = occurrences[integer];
+
+  if (occurrence ===1) {
+    console.log(`${integer} occurs ${occurrence} time`);
+  } else {
+    console.log(`${integer} occurs ${occurrence} times`);
+  }
 }

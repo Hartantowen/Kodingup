@@ -1,35 +1,50 @@
 const readline = require('readline-sync');
-function findLargest(matrix){
-    let maxVal = matrix[0][0];
-    let maxRow = 0;
-    let maxCol = 0;
 
-    for (let r = 0; r < matrix.length; r++){
-        for(let c = 0; c < matrix[r].length; c++){
-if (matrix[r][c] > maxVal){
-    maxVal = matrix[r][c];
-    maxRow = r;
-    maxCol = c;
-}
-}
+function parseNumbers(str) {
+    const strs = str.split(' ');
+    const numbers = [];
+
+    for (let i = 0; i < strs.length; i++) {
+        const num = +strs[i];
+        numbers.push(num);
     }
-console.log(`The location of the largest element is ${maxVal} at (${maxRow}, ${maxCol})`);
+    return numbers;
 }
 
-const dimInput = readline.question('Enter the number of rows and columns in the array: ');
-const dims = dimInput.trim().split(/\s+/);
-const numRows = Number(dims[0]);
-console.log('Enter the array:');
+function locateLargestElement(table) {
+    let largestNumber = Number.NEGATIVE_INFINITY;
+    let largestCoordinate = { row: 0, col: 0 };
+for (let row = 0; row < table.length; row++) {
+for (let col = 0; col < table[row].length; col++) {
+    const number = table[row][col];
 
-const matrix = [];
-for(let i = 0; i < numRows; i++){
-    const rowInput = readline.question('');
-    const rowStrings = rowInput.trim().split(/\s+/);
-
-    const rowNumbers = [];
-    for(let j = 0; j < rowStrings.length; j++){
-        rowNumbers.push(parseFloat(rowStrings[j]));
+    if (number > largestNumber) {
+        largestNumber = number;
+largestCoordinate = { row,col };
     }
-    matrix.push(rowNumbers);
 }
-findLargest(matrix);
+}
+return largestCoordinate;
+}
+const numbers = parseNumbers(readline.question('Enter the number of rows and columns in the array: '));
+const rows = numbers[0];
+const columns = numbers[1];
+
+const table =[];
+console.log('Enter the array: ');
+for (let row = 0; row < rows;row++) {
+    let numbers;
+
+    while (true) { 
+        numbers = parseNumbers(readline.question());
+    if (numbers.length !== columns) {
+        console.log(`Number count must match the required columns (${columns})`)
+    } else {
+        break;
+    }
+}
+    table.push(numbers);
+}
+const coordinate = locateLargestElement(table);
+
+console.log(`The location of the largest element is (${coordinate.row}, ${coordinate.col})`);
