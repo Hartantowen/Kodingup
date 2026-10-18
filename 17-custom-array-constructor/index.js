@@ -1,18 +1,17 @@
 const readlineSync = require('readline-sync');
 
-// Constructor function Arr
+
 function Arr() {
   this.length = 0;
 }
 
-// 1. push(element)
 Arr.prototype.push = function (element) {
   this[this.length] = element;
   this.length++;
   return this.length;
 };
 
-// 2. pop()
+
 Arr.prototype.pop = function () {
   if (this.length === 0) {
     return undefined;
@@ -24,7 +23,7 @@ Arr.prototype.pop = function () {
   return element;
 };
 
-// 3. indexOf(element)
+
 Arr.prototype.indexOf = function (element) {
   for (let i = 0; i < this.length; i++) {
     if (this[i] === element) {
@@ -34,12 +33,12 @@ Arr.prototype.indexOf = function (element) {
   return -1;
 };
 
-// 4. includes(element)
+
 Arr.prototype.includes = function (element) {
   return this.indexOf(element) !== -1;
 };
 
-// 5. findIndex(callback)
+
 Arr.prototype.findIndex = function (callback) {
   for (let i = 0; i < this.length; i++) {
     if (callback(this[i], i)) {
@@ -49,7 +48,7 @@ Arr.prototype.findIndex = function (callback) {
   return -1;
 };
 
-// 6. find(callback)
+
 Arr.prototype.find = function (callback) {
   const index = this.findIndex(callback);
   if (index !== -1) {
@@ -58,7 +57,7 @@ Arr.prototype.find = function (callback) {
   return undefined;
 };
 
-// 7. filter(callback)
+
 Arr.prototype.filter = function (callback) {
   const result = new Arr();
   for (let i = 0; i < this.length; i++) {
@@ -69,7 +68,7 @@ Arr.prototype.filter = function (callback) {
   return result;
 };
 
-// 8. map(callback)
+
 Arr.prototype.map = function (callback) {
   const result = new Arr();
   for (let i = 0; i < this.length; i++) {
@@ -78,7 +77,7 @@ Arr.prototype.map = function (callback) {
   return result;
 };
 
-// Symbol.iterator implementation
+
 Arr.prototype[Symbol.iterator] = function () {
   let index = 0;
   const self = this;
@@ -94,7 +93,7 @@ Arr.prototype[Symbol.iterator] = function () {
   };
 };
 
-// Helper function to format scores into space-separated string using for...of
+
 function formatScores(arr) {
   if (arr.length === 0) {
     return 'none';
